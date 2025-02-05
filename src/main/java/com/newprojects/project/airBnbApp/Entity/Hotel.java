@@ -25,14 +25,10 @@ public class Hotel {
 
     private  String city;
 
-    @ElementCollection
-    @CollectionTable(name = "hotel_photos", joinColumns = @JoinColumn(name = "hotel_id"))
-    @Column(name = "photo", columnDefinition = "TEXT")
+    @Column(name = "photo", columnDefinition = "TEXT[]")
     private String[] photos;
 
-    @ElementCollection
-    @CollectionTable(name = "hotel_amenities", joinColumns = @JoinColumn(name = "hotel_id"))
-    @Column(name = "amenity", columnDefinition = "TEXT")
+    @Column(name = "amenity", columnDefinition = "TEXT[]")
     private  String[] amenities;
 
     @CreationTimestamp
