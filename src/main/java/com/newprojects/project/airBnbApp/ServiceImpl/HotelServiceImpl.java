@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
+
+
 
 @Service
 @Slf4j
@@ -70,6 +71,23 @@ public class HotelServiceImpl implements HotelService {
         log.info("Hotel Deleted Sucessfully !!");
 
         return true;
+
+    }
+
+    @Override
+    public void activateHotel(Long id) {
+        log.info("Activating the Hotel with ID :{}",id);
+        Hotel hotel = hotelRepository.
+                findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Hotel id not found with id :"+id));
+
+        hotel.setActive(true);
+
+        
+
+
+
+
 
     }
 }

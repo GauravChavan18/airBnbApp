@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -60,6 +60,5 @@ public class Inventory {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 
 }
