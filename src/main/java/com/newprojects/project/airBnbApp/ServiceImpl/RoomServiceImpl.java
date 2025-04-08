@@ -69,6 +69,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public RoomDto getRoomById(Long roomId) {
 
+        log.info("Searching the rooms in a hotel with room Id:{}",roomId);
         Room room = roomRepository
                 .findById(roomId)
                 .orElseThrow(()-> new ResourceNotFoundException("Room not found with Id :"+roomId));

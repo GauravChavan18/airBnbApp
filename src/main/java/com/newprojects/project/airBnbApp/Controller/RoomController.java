@@ -4,13 +4,17 @@ import com.newprojects.project.airBnbApp.Dto.RoomDto;
 import com.newprojects.project.airBnbApp.Service.RoomService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("admin/hotels/{hotelId}/rooms")
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class RoomController {
 
 
@@ -19,20 +23,22 @@ public class RoomController {
 
 
 
-    @PostMapping()
-    public ResponseEntity<RoomDto> createNewRoom(@PathVariable Long HotelId , @RequestBody RoomDto roomDto)
+    @PostMapping
+    public ResponseEntity<RoomDto> createNewRoom(@PathVariable Long hotelId , @RequestBody RoomDto roomDto)
     {
 
-        RoomDto newroomDto = roomService.createNewRoom(HotelId ,roomDto);
+        log.info("Attempting to create a new room with ID:"+roomDto.getId());
+        RoomDto newroomDto = roomService.createNewRoom(hotelId ,roomDto);
 
         return new ResponseEntity<>(newroomDto , HttpStatus.CREATED);
 
     }
 
     @GetMapping()
-    public ResponseEntity<RoomDto> getHotelById(@PathVariable Long hotelId)
+    public ResponseEntity<List<RoomDto>> getAllRoomsOfHotel(@PathVariable Long hotelId)
     {
-        RoomDto roomdto =roomService.getRoomById(hotelId);
+        log.info("Attempting to get all the room in Hotel by hotelID:"+hotelId);
+        List<RoomDto> roomdto =roomService.getAllRoomsOfHotel(hotelId);
 
         return new ResponseEntity<>(roomdto , HttpStatus.FOUND);
     }
@@ -40,6 +46,7 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public ResponseEntity<RoomDto> getRoomById(@PathVariable Long roomId)
     {
+        log.info("Attempting to get all the room in Hotel by RoomID:"+roomId);
         RoomDto roomDto =roomService.getRoomById(roomId);
 
         return new ResponseEntity<>(roomDto ,HttpStatus.FOUND);
@@ -48,6 +55,7 @@ public class RoomController {
     @DeleteMapping("/{roomId}")
     public ResponseEntity deleteRoomById(@PathVariable Long roomId)
     {
+        log.info("Attempting to delete room in Hotel by RoomID:"+roomId);
         roomService.deleteRoomById(roomId);
 
         return ResponseEntity.noContent().build();
