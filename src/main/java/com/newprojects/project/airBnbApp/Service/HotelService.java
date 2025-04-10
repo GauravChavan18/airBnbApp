@@ -1,11 +1,12 @@
 package com.newprojects.project.airBnbApp.Service;
 
 import com.newprojects.project.airBnbApp.Dto.HotelDto;
+import com.newprojects.project.airBnbApp.Dto.RoomDto;
 
 
 public interface HotelService {
 
-    HotelDto createNewHotel(HotelDto hotelDto);
+    HotelDto createNewHotel(HotelDto hotelDto );
 
     HotelDto getHotelById(Long id);
 

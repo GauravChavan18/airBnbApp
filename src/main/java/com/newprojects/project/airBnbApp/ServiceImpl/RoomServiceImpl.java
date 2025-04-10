@@ -23,7 +23,7 @@ public class RoomServiceImpl implements RoomService {
     final RoomRepository roomRepository;
     final ModelMapper modelMapper;
     final HotelRepository hotelRepository;
-
+    final InventoryServiceImpl inventoryService;
 
 
 
@@ -42,6 +42,12 @@ public class RoomServiceImpl implements RoomService {
         room.setHotel(hotel);
 
         roomRepository.save(room);
+
+        if(hotel.getActive())
+        {
+                inventoryService.initializedRoomForYear(room);
+        }
+
         log.info("Room is created in hotel with Id:{}",room.getId());
         return modelMapper.map(room,RoomDto.class);
 
@@ -82,16 +88,13 @@ public class RoomServiceImpl implements RoomService {
     public void deleteRoomById(Long roomId) {
         log.info("Deleting the room with id :",roomId);
 
-        Boolean exists = roomRepository.existsById(roomId);
+        Room room = roomRepository
+                .findById(roomId)
+                .orElseThrow(()-> new ResourceNotFoundException("Room not found with Id :"+roomId));
 
         log.info("deleting the room with id",roomId);
+        inventoryService.deleteAllInvetories(room);
+        roomRepository.deleteById(roomId);
 
-        if(exists)
-        {
-            roomRepository.deleteById(roomId);
-        }
-        else{
-            throw new ResourceNotFoundException("Room not found with Id :"+roomId);
-        }
     }
 }
